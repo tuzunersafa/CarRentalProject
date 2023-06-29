@@ -4,6 +4,7 @@ using Entites.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,8 +22,11 @@ namespace Business.Concrete
 
         public void Add(Car car)
         {
-            //Sorgulama komutları
-            _carDal.Add(car);
+            if (car.DailyPrice > 0 && car.Description.Length >=2)
+            {
+                _carDal.Add(car);
+            }
+            
         }
 
         public void Delete(Car car)
@@ -32,23 +36,22 @@ namespace Business.Concrete
 
         }
 
-        public List<Car> GetAll()
+        public Car Get(Expression<Func<Car, bool>> filter)
         {
-            //Sorgulama komutları
-            return _carDal.GetAll();
-            
+            return _carDal.Get(filter);
         }
 
-        public List<Car> GetById(int id)
+       
+
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
         {
-            //Sorgulama komutları
-            return _carDal.GetById(id);
+            return _carDal.GetAll(filter);
         }
 
-        public void Update()
+        public void Update(Car entity)
         {
             //Sorgulama komutları
-            _carDal.Update();
+            _carDal.Update(entity);
         }
     }
 }

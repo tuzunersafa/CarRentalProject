@@ -3,6 +3,7 @@ using Entites.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,9 +39,19 @@ namespace DataAccess.Concrete.InMemory
 
         }
 
+        public Car Get(Expression<Func<Car, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Car> GetAll()
         {
             return _cars.ToList();
+        }
+
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Car> GetById(int id)
@@ -48,7 +59,8 @@ namespace DataAccess.Concrete.InMemory
             return _cars.Where(c => c.Id == id).ToList(); ;
         }
 
-        public void Update()
+
+        public void Update(Car entity)
         {
             throw new NotImplementedException();
         }

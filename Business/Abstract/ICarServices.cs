@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface ICarServices
+    public interface ICarServices : IEntityServices<Car>
     {
-        public List<Car> GetById(int id);
-        public List<Car> GetAll();
-        void Add(Car car);
-        void Delete(Car car);
-        void Update();
+        //public List<Car> GetById(int id);
+        //public List<Car> GetAll();
+        //void Add(Car car);
+        //void Delete(Car car);
+        //void Update();
 
     }
 }
