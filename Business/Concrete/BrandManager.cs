@@ -25,24 +25,24 @@ namespace Business.Concrete
 
         public void Delete(Brand entity)
         {
-            throw new NotImplementedException();
+            _brandDal.Delete(entity);
         }
 
         public Brand Get(Expression<Func<Brand, bool>> filter)
         {
-            throw new NotImplementedException();
+            return _brandDal.Get(filter);
         }
 
         public List<Brand> GetAll(Expression<Func<Brand, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            return _brandDal.GetAll(filter);
         }
 
         
 
         public void Update(Brand entity)
         {
-            throw new NotImplementedException();
+             _brandDal.Update(entity);
         }
     }
 }

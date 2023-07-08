@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using DataAccess.Abstract;
 using Entites.Concrete;
 using System;
 using System.Collections.Generic;
@@ -11,29 +12,36 @@ namespace Business.Concrete
 {
     internal class ColorManager : IColourServices
     {
+        IColourDal _colourDal;
+
+        public ColorManager(IColourDal colourDal)
+        {
+            _colourDal = colourDal;
+        }
+
         public void Add(Colour entity)
         {
-            throw new NotImplementedException();
+            _colourDal.Add(entity);
         }
 
         public void Delete(Colour entity)
         {
-            throw new NotImplementedException();
+            _colourDal.Delete(entity);
         }
 
         public Colour Get(Expression<Func<Colour, bool>> filter)
         {
-            throw new NotImplementedException();
+            return _colourDal.Get(filter);
         }
 
         public List<Colour> GetAll(Expression<Func<Colour, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            return _colourDal.GetAll(filter);
         }
 
         public void Update(Colour entity)
         {
-            throw new NotImplementedException();
+            _colourDal.Update(entity);
         }
     }
 }
