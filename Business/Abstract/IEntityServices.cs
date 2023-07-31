@@ -1,4 +1,6 @@
-﻿using Entites.Abstract;
+﻿using Core.Utitilies.Result.Data_Result;
+using Core.Utitilies.Result.Void_Result;
+using Entites.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +12,14 @@ namespace Business.Abstract
 {
     public interface IEntityServices <T> where T : class, IEntity,new()
     {
-        List<T> GetAll(Expression<Func<T, bool>> filter = null);
+        IDataResult<List<T>> GetAll(Expression<Func<T, bool>> filter = null);
 
-        T Get(Expression<Func<T, bool>> filter);
+        IDataResult<T> Get(Expression<Func<T, bool>> filter);
 
         //public List<T> GetById(int id);
         //public List<T> GetAll();
-        void Add(T entity);
-        void Delete(T entity);
-        void Update(T entity);
+        IResult Add(T entity);
+        IResult Delete(T entity);
+        IResult Update(T entity);
     }
 }

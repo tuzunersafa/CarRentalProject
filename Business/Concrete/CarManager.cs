@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utitilies.Result.Data_Result;
+using Core.Utitilies.Result.Void_Result;
 using DataAccess.Abstract;
 using Entites.Concrete;
 using Entites.DTOs;
@@ -21,43 +24,68 @@ namespace Business.Concrete
         }
 
 
-        public void Add(Car car)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public IResult Add(Car car)
         {
-            if (car.DailyPrice > 0 && car.Description.Length >=2)
+            if (car.Description.Length >=2)
             {
                 _carDal.Add(car);
+                return new SuccessResult(Messages.Added);
+            }
+            else
+            {
+                return new ErrorResult("Araba adı en az 2 karakter olmalı");
             }
             
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             //Sorgulama komutları
             _carDal.Delete(car);
+            return new SuccessResult(Messages.Deleted);
 
         }
 
-        public Car Get(Expression<Func<Car, bool>> filter)
+        public IDataResult<Car> Get(Expression<Func<Car, bool>> filter)
         {
-            return _carDal.Get(filter);
+            return new SuccessDataResult<Car> (_carDal.Get(filter),Messages.Listed);
         }
 
        
 
-        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
+        public IDataResult<List<Car>> GetAll(Expression<Func<Car, bool>> filter = null)
         {
-            return _carDal.GetAll(filter);
+            return new SuccessDataResult<List<Car>>( _carDal.GetAll(filter),Messages.Listed);
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _carDal.GetCarDetails();
+            if (DateTime.Now.Hour == 23)
+            {
+                return new ErrorDataResult<List<CarDetailDto>>("23:00 - 24:00 sattleri arasında işlem yapılamaz");
+            }
+            return new SuccessDataResult<List<CarDetailDto>> (_carDal.GetCarDetails());
         }
 
-        public void Update(Car entity)
+        public IResult Update(Car entity)
         {
             //Sorgulama komutları
             _carDal.Update(entity);
+            return new SuccessResult();
         }
     }
 }

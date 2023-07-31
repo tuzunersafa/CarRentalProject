@@ -12,9 +12,9 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            
-            
-            ICarServices carManager  = new CarManager(new EfCarDal());
+
+
+            ICarServices carManager = new CarManager(new EfCarDal());
             IBrandServices brandManger = new BrandManager(new EfBrandDal());
 
             //brandManger.Add(new Brand { Id = 1, Name = "Nissan"});
@@ -37,44 +37,24 @@ namespace ConsoleUI
             //Console.WriteLine(carManager.Get(c => c.BrandId == 1).Description);
             //Console.WriteLine(carManager.GetAll()[0].Description);
 
-            foreach (var item in carManager.GetCarDetails())
+            //DetayGetir(carManager);
+
+            var result = carManager.Get(c => c.Id == 1).Data;
+            Console.WriteLine(result.Id+" "+result.Description);
+
+        }
+
+        private static void DetayGetir(ICarServices carManager)
+        {
+            foreach (var item in carManager.GetCarDetails().Data)
             {
-                Console.Write(item.Description+" / ");
-                Console.Write(item.BrandName+" / ");
-                Console.Write(item.ColorName+" / ");
-                Console.Write(item.DailyPrice+"\n");
+                Console.Write(item.Description + " / ");
+                Console.Write(item.BrandName + " / ");
+                Console.Write(item.ColorName + " / ");
+                Console.Write(item.DailyPrice + "TL \n");
 
 
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
     }
 }

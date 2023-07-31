@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utitilies.Result.Data_Result;
+using Core.Utitilies.Result.Void_Result;
 using DataAccess.Abstract;
 using Entites.Concrete;
 using System;
@@ -18,31 +21,46 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        public void Add(Brand entity)
+
+
+
+
+        public IResult Add(Brand entity)
         {
             _brandDal.Add(entity);
+            return new Result(true,Messages.Added);
         }
 
-        public void Delete(Brand entity)
+        public IResult Delete(Brand entity)
         {
             _brandDal.Delete(entity);
+            return new SuccessResult(Messages.Deleted);
         }
 
-        public Brand Get(Expression<Func<Brand, bool>> filter)
+        public IDataResult<Brand> Get(Expression<Func<Brand, bool>> filter)
         {
-            return _brandDal.Get(filter);
+            return new SuccessDataResult<Brand> (_brandDal.Get(filter),Messages.Listed);
         }
 
-        public List<Brand> GetAll(Expression<Func<Brand, bool>> filter = null)
+        public IDataResult<List<Brand>> GetAll(Expression<Func<Brand, bool>> filter = null)
         {
-            return _brandDal.GetAll(filter);
+            return new SuccessDataResult<List<Brand>> (_brandDal.GetAll(filter),Messages.Listed);
         }
 
         
 
-        public void Update(Brand entity)
+        public IResult Update(Brand entity)
         {
-             _brandDal.Update(entity);
+            if (DateTime.Now.Hour == 23)
+            {
+                return new ErrorResult("23:00 ile 23:59 arası güncelleme yapılamaz");
+            }
+            else
+            {
+                _brandDal.Update(entity);
+                return new SuccessResult(Messages.Updated);
+            }
+             
         }
     }
 }
