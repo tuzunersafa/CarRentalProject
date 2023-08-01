@@ -37,16 +37,30 @@ namespace ConsoleUI
             //Console.WriteLine(carManager.Get(c => c.BrandId == 1).Description);
             //Console.WriteLine(carManager.GetAll()[0].Description);
 
-            //DetayGetir(carManager);
 
-            var result = carManager.Get(c => c.Id == 1).Data;
-            Console.WriteLine(result.Id+" "+result.Description);
+
+            //var result = carManager.Get(c => c.Id == 1).Data;
+            //Console.WriteLine(result.Id+" "+result.Description);
+
+
+
+            //Console.WriteLine(xd.ColorName);
+
+
+
+            //Console.WriteLine(result[0].Description);
+            //Console.WriteLine(result.FirstOrDefault().Description);
+            //DetayGetir(carManager);
+            //Console.WriteLine(carManager.GetCarDetailsById(1).Data.Description);
+
+            Console.WriteLine(carManager.GetCarDetails(c=> c.ColorName == "Red").Message);
+
 
         }
 
         private static void DetayGetir(ICarServices carManager)
         {
-            foreach (var item in carManager.GetCarDetails().Data)
+            foreach (var item in carManager.GetCarsDetails().Data)
             {
                 Console.Write(item.Description + " / ");
                 Console.Write(item.BrandName + " / ");

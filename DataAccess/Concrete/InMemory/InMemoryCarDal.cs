@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.InMemory
 {
-    public class InMemoryCarDal : ICarDal
+    public class InMemoryCarDal //: ICarDal
     {
         List<Car> _cars;
         public InMemoryCarDal()
@@ -60,7 +60,22 @@ namespace DataAccess.Concrete.InMemory
             return _cars.Where(c => c.Id == id).ToList(); ;
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public CarDetailDto GetCarDetails(Expression<Func<CarDetailDto, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CarDetailDto GetCarDetailsById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarDetailDto> GetCarsDetail()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarDetailDto> GetCarsDetails()
         {
             throw new NotImplementedException();
         }
