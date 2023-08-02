@@ -28,7 +28,7 @@ namespace Business.Concrete
         public IResult Add(User entity)
         {
             _userDal.Add(entity);
-            return new Result(true, Messages.Added);
+            return new Result(true,entity.FirstName +" "+ Messages.Added);
         }
 
         public IResult Delete(User entity)

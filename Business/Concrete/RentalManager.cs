@@ -27,6 +27,7 @@ namespace Business.Concrete
 
         public IResult Add(Rental entity)
         {
+            
             _rentalDal.Add(entity);
             return new Result(true, Messages.Added);
         }
@@ -47,7 +48,26 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(filter), Messages.Listed);
         }
 
+        public IResult Rent(Rental entity)
+        {
+            var time = _rentalDal.GetAll().LastOrDefault(r => r.Id == entity.Id).ReturnDate;
 
+            if (time.Year > 1000)
+            {
+                entity.ReturnDate = default;
+                _rentalDal.Add(entity);
+                return new SuccessResult();
+            }
+            else
+            {
+                Console.WriteLine("araba gelmemiş");
+                return new ErrorResult("araba gelmemiş");
+                
+            }
+
+
+
+        }
 
         public IResult Update(Rental entity)
         {
