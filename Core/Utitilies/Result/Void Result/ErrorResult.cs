@@ -8,7 +8,7 @@ namespace Core.Utitilies.Result.Void_Result
 {
     public class ErrorResult : Result
     {
-        public ErrorResult(string message) : base(false)
+        public ErrorResult(string message) : base(false,message)
         {
 
         }

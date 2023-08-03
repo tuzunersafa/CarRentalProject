@@ -48,24 +48,20 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(filter), Messages.Listed);
         }
 
-        public IResult Rent(Rental entity)
+        public IResult Rent(Rental entity)              //Daha önce aynı CarId'ye sahip ve teslim edilmemiş(ReturnDate'i default) aracı kontrol edip veritabanına ekleme yapan metod.
         {
-            var time = _rentalDal.GetAll().LastOrDefault(r => r.Id == entity.Id).ReturnDate;
+            var rental = _rentalDal.Get(r=> r.CarId == entity.CarId && r.ReturnDate == default); 
 
-            if (time.Year > 1000)
+            if (rental == null)
             {
-                entity.ReturnDate = default;
-                _rentalDal.Add(entity);
-                return new SuccessResult();
+                _rentalDal.Add(entity);  
+                return new SuccessResult(Messages.Rented); ;
             }
             else
             {
-                Console.WriteLine("araba gelmemiş");
-                return new ErrorResult("araba gelmemiş");
-                
+               
+                return new ErrorResult(rental.CarId + " ID'li araba gelmemiş"); ;
             }
-
-
 
         }
 

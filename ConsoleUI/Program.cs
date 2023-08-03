@@ -80,8 +80,8 @@ namespace ConsoleUI
 
             var rentt = new Rental
             {
-                Id = 1,
-                CarId = 1,
+                
+                CarId = 2,
                 CustomerId = 1,
                 RentDate = new DateTime(2019, 05, 03),
 
@@ -94,8 +94,8 @@ namespace ConsoleUI
 
             //RentACar(rentalManager);
 
-            var mMessage = rentalManager.Rent(rentt).Message;
-            Console.WriteLine(mMessage);
+            
+            Console.WriteLine(rentalManager.Rent(rentt).Message);
 
         }
 
