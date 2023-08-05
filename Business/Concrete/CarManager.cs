@@ -93,7 +93,7 @@ namespace Business.Concrete
            return new SuccessDataResult<CarDetailDto> (_carDal.GetCarDetailsById(id),Messages.Listed);
         }
 
-        public IDataResult<CarDetailDto> GetCarDetails(Expression<Func<CarDetailDto, bool>> filter = null)
+        public IDataResult<CarDetailDto> GetSingleCarDetails(Expression<Func<CarDetailDto, bool>> filter = null)
         {
             var result = _carDal.GetCarDetails(filter);
 
@@ -102,7 +102,7 @@ namespace Business.Concrete
             {
                 return new SuccessDataResult<CarDetailDto>(_carDal.GetCarDetails(filter), Messages.Listed);
             }
-            return new ErrorDataResult<CarDetailDto>("Hata!");
+            return new ErrorDataResult<CarDetailDto>(Messages.Error);
             
         }
     }

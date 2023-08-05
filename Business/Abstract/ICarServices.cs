@@ -20,6 +20,6 @@ namespace Business.Abstract
         public IDataResult<List<CarDetailDto>> GetCarsDetails();
         public IDataResult<CarDetailDto> GetCarDetailsById(int id);
 
-        IDataResult<CarDetailDto> GetCarDetails(Expression<Func<CarDetailDto, bool>> filter = null);
+        IDataResult<CarDetailDto> GetSingleCarDetails(Expression<Func<CarDetailDto, bool>> filter = null);
     }
 }
