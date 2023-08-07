@@ -14,6 +14,6 @@ namespace Business.Constants
         public static string Updated = "Güncellendi";
         public static string Rented = "Araç kiralandı";
         public static string Error = "Hata";
-
+        public static string Returned = "Araç iadesi yapıldı";
     }
 }

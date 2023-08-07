@@ -65,6 +65,26 @@ namespace Business.Concrete
 
         }
 
+        public IResult Return(int rentalId, DateTime returnDate)
+        {
+            var rental = _rentalDal.Get(r => r.Id == rentalId && r.ReturnDate == default);
+
+            if(rental != null)
+            {
+                rental.ReturnDate = returnDate;
+                _rentalDal.Update(rental);
+                return new SuccessResult(Messages.Returned);
+            }
+            else
+            {
+                return new ErrorResult("Hatalı araç bilgileri");
+            }
+
+
+
+        }
+
+
         public IResult Update(Rental entity)
         {
             if (DateTime.Now.Hour == 23)

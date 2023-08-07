@@ -11,6 +11,7 @@ namespace Business.Abstract
     public interface IRentalServices : IEntityServices<Rental>
     {
         public IResult Rent(Rental entity);
+        public IResult Return(int rentalId, DateTime returnDate);
 
     }
 }
