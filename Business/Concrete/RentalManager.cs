@@ -1,15 +1,19 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using Core.Utitilies.Result.Data_Result;
 using Core.Utitilies.Result.Void_Result;
 using DataAccess.Abstract;
 using Entites.Concrete;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using ValidationException = FluentValidation.ValidationException;
 
 namespace Business.Concrete
 {
@@ -27,10 +31,22 @@ namespace Business.Concrete
 
         public IResult Add(Rental entity)
         {
+            var context = new ValidationContext<Rental>(entity);
+            RentalValidator rentalValidator = new RentalValidator();
+            var result = rentalValidator.Validate(context);
+
+            if (!result.IsValid)
+            {
+                throw new ValidationException(result.Errors);
+            }
+
             
             _rentalDal.Add(entity);
             return new Result(true, Messages.Added);
         }
+
+
+
 
         public IResult Delete(Rental entity)
         {

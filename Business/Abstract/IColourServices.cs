@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    internal interface IColourServices : IEntityServices<Colour>
+    public interface IColourServices : IEntityServices<Colour>
     {
     }
 }
