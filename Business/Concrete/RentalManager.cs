@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utitilies.Result.Data_Result;
 using Core.Utitilies.Result.Void_Result;
@@ -29,7 +30,7 @@ namespace Business.Concrete
 
 
 
-
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental entity)
         {
             //var context = new ValidationContext<Rental>(entity);
@@ -41,7 +42,7 @@ namespace Business.Concrete
             //    throw new ValidationException(result.Errors);
             //}
 
-            ValidationTool.Validate(new RentalValidator(), entity);
+            //ValidationTool.Validate(new RentalValidator(), entity);
 
 
             _rentalDal.Add(entity);
