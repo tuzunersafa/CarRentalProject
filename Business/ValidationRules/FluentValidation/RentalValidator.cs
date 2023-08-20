@@ -16,13 +16,13 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(r => r.CustomerId).NotEmpty();
             RuleFor(r => r.CarId).NotEmpty();
 
-            RuleFor(r => r.CustomerId).Must(FirstNumberOne);
+            //RuleFor(r => r.CustomerId).Must(FirstNumberOne).WithMessage("CustomerId 1 ile başlamalı");
 
         }
 
         private bool FirstNumberOne(int arg)
         {
-            return arg.ToString().StartsWith("1");
+            return arg.ToString().StartsWith("1"); //custom validation rule
         }
     }
 }

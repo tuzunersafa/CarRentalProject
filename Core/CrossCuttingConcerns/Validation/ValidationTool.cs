@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ValidationException = FluentValidation.ValidationException;
 
 namespace Core.CrossCuttingConcerns.Validation
 {
@@ -13,11 +14,11 @@ namespace Core.CrossCuttingConcerns.Validation
     {
 
 
-        public static void Validate(IValidator )
+        public static void Validate(IValidator validator, object entity)
         {
             var context = new ValidationContext<object>(entity);
-            RentalValidator rentalValidator = new RentalValidator();
-            var result = rentalValidator.Validate(context);
+            
+            var result = validator.Validate(context);
 
             if (!result.IsValid)
             {

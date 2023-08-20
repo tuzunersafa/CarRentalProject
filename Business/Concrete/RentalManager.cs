@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utitilies.Result.Data_Result;
 using Core.Utitilies.Result.Void_Result;
 using DataAccess.Abstract;
@@ -31,16 +32,18 @@ namespace Business.Concrete
 
         public IResult Add(Rental entity)
         {
-            var context = new ValidationContext<Rental>(entity);
-            RentalValidator rentalValidator = new RentalValidator();
-            var result = rentalValidator.Validate(context);
+            //var context = new ValidationContext<Rental>(entity);
+            //RentalValidator rentalValidator = new RentalValidator();
+            //var result = rentalValidator.Validate(context);
 
-            if (!result.IsValid)
-            {
-                throw new ValidationException(result.Errors);
-            }
+            //if (!result.IsValid)
+            //{
+            //    throw new ValidationException(result.Errors);
+            //}
 
-            
+            ValidationTool.Validate(new RentalValidator(), entity);
+
+
             _rentalDal.Add(entity);
             return new Result(true, Messages.Added);
         }
