@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utitilies.Result.Data_Result;
 using Core.Utitilies.Result.Void_Result;
 using DataAccess.Abstract;
@@ -7,6 +9,7 @@ using Entites.Concrete;
 using Entites.DTOs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
@@ -38,7 +41,7 @@ namespace Business.Concrete
 
 
 
-
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
             if (car.Description.Length >= 2)

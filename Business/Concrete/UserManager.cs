@@ -1,11 +1,13 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Validation;
 using Core.Utitilies.Result.Data_Result;
 using Core.Utitilies.Result.Void_Result;
 using DataAccess.Abstract;
 using Entites.Concrete;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -24,7 +26,7 @@ namespace Business.Concrete
 
 
 
-
+       
         public IResult Add(User entity)
         {
             _userDal.Add(entity);
