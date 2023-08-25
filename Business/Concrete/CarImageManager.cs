@@ -58,7 +58,7 @@ namespace Business.Concrete
             }
 
 
-            string imagePath = _fileHelper.SaveImageFileAndReturnFileName(imageFile); //bu metot oluşturduğu dosya ismini döndürür
+            string imagePath = _fileHelper.SaveImageFileAndReturnFileName(imageFile).Data; //bu metot oluşturduğu dosya ismini döndürür
 
             var carImage = new CarImage
             {
@@ -74,7 +74,9 @@ namespace Business.Concrete
 
         public IResult Delete(CarImage entity)
         {
+            _fileHelper.Delete(entity.ImagePath);
             _carImageDal.Delete(entity);
+            
             return new SuccessResult();
         }
 

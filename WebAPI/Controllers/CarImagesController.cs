@@ -92,10 +92,11 @@ namespace WebAPI.Controllers
         //}
 
 
-        [HttpPost("Delete")]
-        public IActionResult Delete(CarImage carImage)
+        [HttpPost("DeleteById")]
+        public IActionResult Delete(int id)
         {
-            var result = _carImageServices.Delete(carImage);
+            var imageToDelete = _carImageServices.Get(i=> i.Id == id).Data;
+            var result = _carImageServices.Delete(imageToDelete);
             if (result.IsSuccess)
             {
                 return Ok(result);

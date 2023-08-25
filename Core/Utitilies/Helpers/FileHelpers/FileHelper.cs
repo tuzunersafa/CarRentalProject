@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.Utitilies.Result.Data_Result;
+using Core.Utitilies.Result.Void_Result;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,13 @@ namespace Core.Utitilies.Helpers.FileHelpers
 {
     public class FileHelper : IFileHelper
     {
-        public string SaveImageFileAndReturnFileName(IFormFile imageFile)
+        public IResult Delete(string imagePath)
+        {
+            File.Delete(Path.Combine("wwwroot/images",imagePath));
+            return new SuccessResult();
+        }
+
+        public IDataResult<string> SaveImageFileAndReturnFileName(IFormFile imageFile)
         {
             if (imageFile == null || imageFile.Length == 0)
             {
@@ -27,8 +35,8 @@ namespace Core.Utitilies.Helpers.FileHelpers
             {
                 imageFile.CopyTo(fileStream);
             }
-
-            return fileName;
+            var toReturn = new SuccessDataResult<string>(fileName,"Görsel klasöre kaydedildi");
+            return toReturn;
         }
     }
 }
