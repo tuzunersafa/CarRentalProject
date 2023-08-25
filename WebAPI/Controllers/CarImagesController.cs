@@ -52,16 +52,31 @@ namespace WebAPI.Controllers
 
         }
 
-        [HttpPost("Add")]
-        public IActionResult Add(IFormFile file)
+        [HttpPost("UploadImage")]
+        public IActionResult UploadImage(IFormFile imageFile, int carId)
         {
-            //var result = _carImageServices.Add(carImage);
-            //if (result.IsSuccess)
-            //{
-            //    return Ok(result);
-            //}
-            //return BadRequest(result);
-            return Ok();
+            var result = _carImageServices.Add2(imageFile, carId);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+
+
+
+
+
+        [HttpPost("Add")]
+        public IActionResult Add(CarImage carImage)
+        {
+            var result = _carImageServices.Add(carImage);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+            
         }
 
 

@@ -1,4 +1,6 @@
-﻿using Entites.Concrete;
+﻿using Core.Utitilies.Result.Void_Result;
+using Entites.Concrete;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +11,6 @@ namespace Business.Abstract
 {
     public interface ICarImageServices : IEntityServices<CarImage>
     {
+        public IResult Add2(IFormFile imageFile, int carId);
     }
 }
