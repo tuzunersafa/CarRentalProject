@@ -83,12 +83,23 @@ namespace Business.Concrete
 
         public IDataResult<CarImage> Get(Expression<Func<CarImage, bool>> filter)
         {
-            return new SuccessDataResult<CarImage>(_carImageDal.Get(filter));
+            var result = _carImageDal.Get(filter);
+            if (result == null)
+            {
+                return new SuccessDataResult<CarImage>(_carImageDal.Get(i=> i.Id == 0),"Default görsel gönderildi");
+            }
+            return new SuccessDataResult<CarImage>(result);
         }
 
         public IDataResult<List<CarImage>> GetAll(Expression<Func<CarImage, bool>> filter = null)
         {
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(filter));
+            var result = _carImageDal.GetAll(filter);
+            if (result.Count == 0)
+            {
+                return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(i => i.Id == 0), "Default görsel gönderildi");
+            }
+
+            return new SuccessDataResult<List<CarImage>>(result);
         }
 
         public IResult Update(CarImage entity)
