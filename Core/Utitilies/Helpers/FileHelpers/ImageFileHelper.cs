@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.Utitilies.Helpers.FileHelpers
 {
-    public class FileHelper : IFileHelper
+    public class ImageFileHelper : IFileHelper
     {
         public IResult Delete(string imagePath)
         {
@@ -21,7 +21,7 @@ namespace Core.Utitilies.Helpers.FileHelpers
         {
             if (imageFile == null || imageFile.Length == 0)
             {
-                throw new ArgumentNullException("imageFile","Dosya bulunamadı"); //Validasyon taşınacak
+                return new ErrorDataResult<string>(null,$"{imageFile.FileName} bulunamadı."); //Validasyon taşınacak
             }
 
             string fileExtension = Path.GetExtension(imageFile.FileName);
@@ -35,6 +35,9 @@ namespace Core.Utitilies.Helpers.FileHelpers
             {
                 imageFile.CopyTo(fileStream);
             }
+
+
+
             var toReturn = new SuccessDataResult<string>(fileName,"Görsel klasöre kaydedildi");
             return toReturn;
         }

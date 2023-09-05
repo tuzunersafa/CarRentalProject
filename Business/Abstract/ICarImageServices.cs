@@ -11,6 +11,6 @@ namespace Business.Abstract
 {
     public interface ICarImageServices : IEntityServices<CarImage>
     {
-        public IResult Add2(IFormFile imageFile, int carId);
+        public IResult Upload(IFormFile imageFile, int carId);
     }
 }

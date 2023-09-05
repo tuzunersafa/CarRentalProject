@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Core.Aspects.Autofac.Validation;
+using Core.Entites.Concrete;
 using Core.Utitilies.Result.Data_Result;
 using Core.Utitilies.Result.Void_Result;
 using DataAccess.Abstract;

@@ -37,7 +37,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfBrandDal>().As<IBrandDal>().SingleInstance();
             builder.RegisterType<EfCarImageDal>().As<ICarImageDal>().SingleInstance();
 
-            builder.RegisterType<FileHelper>().As<IFileHelper>().SingleInstance();
+            builder.RegisterType<ImageFileHelper>().As<IFileHelper>().SingleInstance();
 
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();

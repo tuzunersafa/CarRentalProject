@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Aspects.Autofac.Transaction;
 using Core.Utitilies.BusinessRules;
 using Core.Utitilies.Helpers.FileHelpers;
 using Core.Utitilies.Result.Data_Result;
@@ -19,7 +20,7 @@ namespace Business.Concrete
     {
         ICarImageDal _carImageDal;
         IFileHelper _fileHelper;
-        public CarImageManager(ICarImageDal carImageDal,IFileHelper fileHelper)
+        public CarImageManager(ICarImageDal carImageDal, IFileHelper fileHelper)
         {
             _carImageDal = carImageDal;
             _fileHelper = fileHelper;
@@ -45,11 +46,11 @@ namespace Business.Concrete
 
         }
 
-
-        public IResult Add2(IFormFile imageFile, int carId)
+        //[TransactionScopeAspect]
+        public IResult Upload(IFormFile imageFile, int carId)
         {
             var errorResult = BusinessRules.Check(
-                CheckIfExtensionSupported(imageFile),
+                 CheckIfExtensionSupported(imageFile),
                 CheckIfFiveImageForCar(carId));
 
             if (!errorResult.IsSuccess)
@@ -57,11 +58,18 @@ namespace Business.Concrete
                 return new ErrorResult();
             }
 
+            var result = _fileHelper.SaveImageFileAndReturnFileName(imageFile);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
 
-            string imagePath = _fileHelper.SaveImageFileAndReturnFileName(imageFile).Data; //bu metot oluşturduğu dosya ismini döndürür
+            string imagePath = result.Data; //bu metot oluşturduğu dosya ismini döndürür
+
 
             var carImage = new CarImage
             {
+
                 CarId = carId,
                 ImagePath = imagePath,
                 Date = DateTime.Now
@@ -76,7 +84,7 @@ namespace Business.Concrete
         {
             _fileHelper.Delete(entity.ImagePath);
             _carImageDal.Delete(entity);
-            
+
             return new SuccessResult();
         }
 
@@ -86,7 +94,7 @@ namespace Business.Concrete
             var result = _carImageDal.Get(filter);
             if (result == null)
             {
-                return new SuccessDataResult<CarImage>(_carImageDal.Get(i=> i.Id == 0),"Default görsel gönderildi");
+                return new SuccessDataResult<CarImage>(_carImageDal.Get(i => i.Id == 0), "Default görsel gönderildi");
             }
             return new SuccessDataResult<CarImage>(result);
         }
@@ -161,5 +169,6 @@ namespace Business.Concrete
             }
             return new ErrorResult("Hatalı uzantı");
         }
+       
     }
 }

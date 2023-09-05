@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
         [HttpPost("UploadImage")]
         public IActionResult UploadImage(IFormFile imageFile, int carId)
         {
-            var result = _carImageServices.Add2(imageFile, carId);
+            var result = _carImageServices.Upload(imageFile, carId);
             if (result.IsSuccess)
             {
                 return Ok(result);
@@ -67,17 +67,17 @@ namespace WebAPI.Controllers
 
 
 
-        [HttpPost("Add")]
-        public IActionResult Add(CarImage carImage)
-        {
-            var result = _carImageServices.Add(carImage);
-            if (result.IsSuccess)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+        //[HttpPost("Add")]
+        //public IActionResult Add(CarImage carImage)
+        //{
+        //    var result = _carImageServices.Add(carImage);
+        //    if (result.IsSuccess)
+        //    {
+        //        return Ok(result);
+        //    }
+        //    return BadRequest(result);
             
-        }
+        //}
 
 
         //[HttpPost("Update")]
