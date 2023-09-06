@@ -1,5 +1,5 @@
 ﻿using Business.Abstract;
-using Core.Aspects.Autofac.Transaction;
+
 using Core.Utitilies.BusinessRules;
 using Core.Utitilies.Helpers.FileHelpers;
 using Core.Utitilies.Result.Data_Result;

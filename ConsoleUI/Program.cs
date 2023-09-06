@@ -121,17 +121,7 @@ namespace ConsoleUI
 
         }
 
-        private static void Ekle_MsgYazdir(IUserServices userManager)
-        {
-            Console.WriteLine(userManager.Add(new User
-            {
-                Id = 3,
-                FirstName = "Esma",
-                LastName = "Tüzüner",
-                Email = "esmatuzuner@gmail.com",
-                Password = "esma2008"
-            }).Message);
-        }
+        
 
         private static void DetayGetir(ICarServices carManager)
         {

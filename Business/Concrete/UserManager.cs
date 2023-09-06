@@ -27,11 +27,11 @@ namespace Business.Concrete
 
 
 
-       
+
         public IResult Add(User entity)
         {
             _userDal.Add(entity);
-            return new Result(true,entity.FirstName +" "+ Messages.Added);
+            return new Result(true, entity.FirstName + " " + Messages.Added);
         }
 
         public IResult Delete(User entity)
@@ -51,18 +51,16 @@ namespace Business.Concrete
         }
 
 
+        public IDataResult<List<OperationClaim>> GetClaimsOfUser(User user)
+        {
+            return new SuccessDataResult<List<OperationClaim>>(_userDal.GetOperationClaimsOfUser(user), Messages.Listed);
+        } 
+
 
         public IResult Update(User entity)
         {
-            if (DateTime.Now.Hour == 23)
-            {
-                return new ErrorResult("23:00 ile 23:59 arası güncelleme yapılamaz");
-            }
-            else
-            {
-                _userDal.Update(entity);
-                return new SuccessResult(Messages.Updated);
-            }
+            _userDal.Update(entity);
+            return new SuccessResult(Messages.Updated);
 
         }
     }

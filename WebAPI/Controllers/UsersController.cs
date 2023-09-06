@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Entites.Concrete;
 using Entites.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,20 @@ namespace WebAPI.Controllers
         public IActionResult GetById(int id)
         {
             var result = _userService.Get(u => u.Id == id);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetClaimsOfUser")]
+        public IActionResult GetClaimsOfUser(int userId)
+        {
+            var _user = _userService.Get(u => u.Id == userId).Data;
+
+            var result = _userService.GetClaimsOfUser(_user);
 
             if (result.IsSuccess)
             {
@@ -73,6 +88,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+
 
 
     }      

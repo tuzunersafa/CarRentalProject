@@ -15,5 +15,8 @@ namespace Business.Constants
         public static string Rented = "Araç kiralandı";
         public static string Error = "Hata";
         public static string Returned = "Araç iadesi yapıldı";
+        public static string Registered = "Kullanıcı kaydedildi";
+
+        public static string? AuthorizationDenied = "Yetki reddedildi";
     }
 }

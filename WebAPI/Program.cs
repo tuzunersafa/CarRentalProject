@@ -3,8 +3,13 @@ using Autofac.Extensions.DependencyInjection;
 using Business.Abstract;
 using Business.Concrete;
 using Business.DependencyResolvers.Autofac;
+using Core.Utilities.IoC;
+using Core.Utitilies.Helpers.Security.Encryption;
+using Core.Utitilies.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebAPI
 {
@@ -19,24 +24,29 @@ namespace WebAPI
             builder.Services.AddControllers();
 
 
+            var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidIssuer = tokenOptions.Issuer,
+                        ValidAudience = tokenOptions.Audience,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+                    };
+                });
+
+            ServiceTool.Create(builder.Services);
+
+            
 
 
-            //builder.Services.AddSingleton<ICarServices, CarManager>();
-            //builder.Services.AddSingleton<ICarDal, EfCarDal>();
-            //builder.Services.AddSingleton<IUserServices, UserManager>();
-            //builder.Services.AddSingleton<IUserDal, EfUserDal>();
-            //builder.Services.AddSingleton<ICustomerServices, CustomerManager>();
-            //builder.Services.AddSingleton<ICustomerDal, EfCustomerDal>();
-            //builder.Services.AddSingleton<IRentalServices, RentalManager>();
-            //builder.Services.AddSingleton<IRentalDal, EfRentalDal>();
-
-
-            //builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-
-            //builder.Host.ConfigureContainer<ContainerBuilder>(options =>
-            //{
-            //    options.RegisterModule(new AutofacBusinessModule());
-            //});
 
 
 
@@ -56,6 +66,8 @@ namespace WebAPI
             }
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
       

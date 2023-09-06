@@ -5,9 +5,11 @@ using Business.Concrete;
 using Castle.DynamicProxy;
 using Core.Utitilies.Helpers.FileHelpers;
 using Core.Utitilies.Interceptors;
+using Core.Utitilies.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entites.Concrete;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CustomerManager>().As<ICustomerServices>().SingleInstance();
             builder.RegisterType<BrandManager>().As<IBrandServices>().SingleInstance();
             builder.RegisterType<CarImageManager>().As<ICarImageServices>().SingleInstance();
+            builder.RegisterType<UserManager>().As<IUserServices>().SingleInstance();
+
 
 
             builder.RegisterType<EfCarDal>().As<ICarDal>().SingleInstance();
@@ -38,6 +42,14 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfCarImageDal>().As<ICarImageDal>().SingleInstance();
 
             builder.RegisterType<ImageFileHelper>().As<IFileHelper>().SingleInstance();
+
+
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
+            builder.RegisterType<AuthManager>().As<IAuthServices>();
+            builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+
+
+
 
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
